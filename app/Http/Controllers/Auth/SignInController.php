@@ -14,7 +14,13 @@ class SignInController extends Controller
     ]);
 
         if(!$token = auth()->attempt($request->only('email', 'password'))) {
-            dd('fail');
+             return response()->json([
+                 'errors' => [
+                     'email' => [
+                         'Could not sign with those details'
+                     ]
+                 ]
+            ], 422);
         }
 
         return response()->json([
